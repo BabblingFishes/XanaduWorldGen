@@ -18,7 +18,7 @@ public class XanaduWGRegistry {
 	public static Biome tempTrashBiome;
 	public static ChunkGeneratorType<OverworldGenSettings, XanaduWGChunkGenerator> xanaduChunkGen;
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void registerBiomes(RegistryEvent.Register<Biome> event) {
 		IForgeRegistry<Biome> registry = event.getRegistry();
 		tempTrashBiome = new TempTrashBiome();
@@ -28,15 +28,17 @@ public class XanaduWGRegistry {
 		
 		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(tempTrashBiome, 10));
 		BiomeManager.addSpawnBiome(tempTrashBiome);
-		BiomeDictionary.addTypes(tempTrashBiome, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.LUSH);
-		
-	}
+		BiomeDictionary.addTypes(tempTrashBiome, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.LUSH);	
+	}*/
 	
-	//@SubscribeEvent
+	@SubscribeEvent
 	public static void registerChunkGenerators(RegistryEvent.Register<ChunkGeneratorType<?, ?>> event) {
 		
+		xanaduChunkGen = new ChunkGeneratorType<>(XanaduWGChunkGenerator::new, true, OverworldGenSettings::new);
+		
+		xanaduChunkGen.setRegistryName(XanaduWorldGen.MOD_ID, "xanaduchunkgen");
+		
 		IForgeRegistry<ChunkGeneratorType<?, ?>> registry = event.getRegistry();
-		registry.register(new ChunkGeneratorType<>(XanaduWGChunkGenerator::new, true, OverworldGenSettings::new));
+		registry.register(xanaduChunkGen);
 	}
-	//Could be a race condition (xanaduChunkGen not initialized)
 }

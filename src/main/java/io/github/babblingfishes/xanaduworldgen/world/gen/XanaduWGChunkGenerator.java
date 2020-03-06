@@ -33,17 +33,17 @@ public class XanaduWGChunkGenerator extends NoiseChunkGenerator<OverworldGenSett
 
    });
    private final OctavesNoiseGenerator depthNoise;
-   private final boolean field_222577_j;
+   private final boolean isAmplified;
    private final PhantomSpawner phantomSpawner = new PhantomSpawner();
    private final PatrolSpawner patrolSpawner = new PatrolSpawner();
    private final CatSpawner catSpawner = new CatSpawner();
-   private final VillageSiege field_225495_n = new VillageSiege();
+   private final VillageSiege villageSiege = new VillageSiege();
 
    public XanaduWGChunkGenerator(IWorld worldIn, BiomeProvider provider, OverworldGenSettings settingsIn) {
       super(worldIn, provider, 4, 8, 256, settingsIn, true);
       this.randomSeed.skip(2620);
       this.depthNoise = new OctavesNoiseGenerator(this.randomSeed, 16);
-      this.field_222577_j = worldIn.getWorldInfo().getGenerator() == WorldType.AMPLIFIED;
+      this.isAmplified = worldIn.getWorldInfo().getGenerator() == WorldType.AMPLIFIED;
    }
 
    public void spawnMobs(WorldGenRegion region) {
@@ -62,12 +62,12 @@ public class XanaduWGChunkGenerator extends NoiseChunkGenerator<OverworldGenSett
       double d3 = 4.277574920654297D;
       int i = -10;
       int j = 3;
-      this.func_222546_a(p_222548_1_, p_222548_2_, p_222548_3_, (double)684.412F, (double)684.412F, 8.555149841308594D, 4.277574920654297D, 3, -10);
+      this.func_222546_a(p_222548_1_, p_222548_2_, p_222548_3_, d0, d1, d2, d3, i, j);
    }
 
    protected double func_222545_a(double p_222545_1_, double p_222545_3_, int p_222545_5_) {
       double d0 = 8.5D;
-      double d1 = ((double)p_222545_5_ - (8.5D + p_222545_1_ * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / p_222545_3_;
+      double d1 = ((double)p_222545_5_ - (d0 + p_222545_1_ * d0 / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / p_222545_3_;
       if (d1 < 0.0D) {
          d1 *= 4.0D;
       }
@@ -80,21 +80,21 @@ public class XanaduWGChunkGenerator extends NoiseChunkGenerator<OverworldGenSett
       float f = 0.0F;
       float f1 = 0.0F;
       float f2 = 0.0F;
-      int i = 2;
+      //int i = 2;
       float f3 = this.biomeProvider.func_222366_b(p_222549_1_, p_222549_2_).getDepth();
 
       for(int j = -2; j <= 2; ++j) {
          for(int k = -2; k <= 2; ++k) {
             Biome biome = this.biomeProvider.func_222366_b(p_222549_1_ + j, p_222549_2_ + k);
-            float f4 = biome.getDepth();
-            float f5 = biome.getScale();
-            if (this.field_222577_j && f4 > 0.0F) {
+            float f4 = biome.getDepth() + 8.0F; //T
+            float f5 = biome.getScale() * 0.5F; //T
+            if (this.isAmplified && f4 > 0.0F) {
                f4 = 1.0F + f4 * 2.0F;
                f5 = 1.0F + f5 * 4.0F;
             }
 
             float f6 = field_222576_h[j + 2 + (k + 2) * 5] / (f4 + 2.0F);
-            if (biome.getDepth() > f3) {
+            if (biome.getDepth() + 8.0F > f3) { //T
                f6 /= 2.0F;
             }
 
@@ -159,7 +159,7 @@ public class XanaduWGChunkGenerator extends NoiseChunkGenerator<OverworldGenSett
       this.phantomSpawner.tick(worldIn, spawnHostileMobs, spawnPeacefulMobs);
       this.patrolSpawner.tick(worldIn, spawnHostileMobs, spawnPeacefulMobs);
       this.catSpawner.tick(worldIn, spawnHostileMobs, spawnPeacefulMobs);
-      this.field_225495_n.func_225477_a(worldIn, spawnHostileMobs, spawnPeacefulMobs);
+      this.villageSiege.func_225477_a(worldIn, spawnHostileMobs, spawnPeacefulMobs);
    }
 
    public int getGroundHeight() {
@@ -167,6 +167,6 @@ public class XanaduWGChunkGenerator extends NoiseChunkGenerator<OverworldGenSett
    }
 
    public int getSeaLevel() {
-      return 63;
+      return 199;
    }
 }

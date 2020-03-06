@@ -6,13 +6,13 @@ loaderVersion="[28,)" #* Forge version
 [[mods]] #* list of mods (for???)
 modId="xanaduworldgen" #*
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="0.0.1" #* ${file.jarVersion}
+version="0.0.2" #* ${file.jarVersion}
 # A display name for the mod
 displayName="Xanadu World Gen" #* Display name
 #updateJSONURL="http://myurl.me/" #_ URL to query for updates (see the JSON update specification, REMOVE if unused)
 #displayURL="http://example.com/" #_ homepage url
 #logoFile="examplemod.png" #_ must be located in root of mod JAR
-credits="Thanks to Junebug, FoundSpore, HarryTalks, and Learn2Forge" #_
+credits="Thanks to Junebug for the motivation, and to FoundSpore, HarryTalks, and Learn2Forge for helping me get started." #_
 authors="BabblingFishes" #_
 # The description text for the mod (multi line!) (mandatory)
 description='''

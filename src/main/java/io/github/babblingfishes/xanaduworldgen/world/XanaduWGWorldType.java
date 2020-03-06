@@ -26,9 +26,9 @@ public class XanaduWGWorldType extends WorldType {
 	@Override
 	public ChunkGenerator<?> createChunkGenerator(World world) {
 		
-		//ChunkGeneratorType<OverworldGenSettings, XanaduWGChunkGenerator> chunkGen = XanaduWGRegistry.xanaduChunkGen;
+		ChunkGeneratorType<OverworldGenSettings, XanaduWGChunkGenerator> chunkGen = XanaduWGRegistry.xanaduChunkGen;
 
-		ChunkGeneratorType<OverworldGenSettings, OverworldChunkGenerator> chunkGen = ChunkGeneratorType.SURFACE;
+		//ChunkGeneratorType<OverworldGenSettings, OverworldChunkGenerator> chunkGen = ChunkGeneratorType.SURFACE;
 
 		BiomeProviderType<OverworldBiomeProviderSettings, OverworldBiomeProvider> biomeProviderType = BiomeProviderType.VANILLA_LAYERED;
 		OverworldGenSettings genSettings = chunkGen.createSettings();

@@ -29,7 +29,7 @@ public class TempTrashBiome extends Biome {
 			)
 			.precipitation(RainType.RAIN)
 			.category(Category.FOREST)
-			.scale(0.05f)
+			.scale(0.02f)
 			.depth(8.0f)
 			.temperature(0.7f)
 			.downfall(0.8f)
