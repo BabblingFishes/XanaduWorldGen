@@ -1,0 +1,37 @@
+# TODO
+modLoader="javafml"
+loaderVersion="[28,)" #* Forge version
+#issueTrackerURL="http://my.issue.tracker/" #_
+
+[[mods]] #* list of mods (for???)
+modId="xanaduworldgen" #*
+# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
+version="0.0.1" #* ${file.jarVersion}
+# A display name for the mod
+displayName="Xanadu World Gen" #* Display name
+#updateJSONURL="http://myurl.me/" #_ URL to query for updates (see the JSON update specification, REMOVE if unused)
+#displayURL="http://example.com/" #_ homepage url
+#logoFile="examplemod.png" #_ must be located in root of mod JAR
+credits="Thanks to Junebug, FoundSpore, HarryTalks, and Learn2Forge" #_
+authors="BabblingFishes" #_
+# The description text for the mod (multi line!) (mandatory)
+description='''
+Configurable world generation, specifically for raising world height.
+'''
+
+# DEPENDENCIES:
+[[dependencies.xanaduworldgen]]
+    # the modid of the dependency
+    modId="forge"
+    mandatory=true #Does this dependency have to exist - if not, ordering below must be specified
+    versionRange="[28,)"
+    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+    ordering="NONE"
+    side="BOTH" #BOTH, CLIENT or SERVER
+# Here's another dependency
+[[dependencies.xanaduworldgen]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.14.4]"
+    ordering="NONE"
+    side="BOTH"
