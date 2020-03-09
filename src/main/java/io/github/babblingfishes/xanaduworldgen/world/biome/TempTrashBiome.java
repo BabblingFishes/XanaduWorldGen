@@ -183,7 +183,7 @@ public class TempTrashBiome extends Biome {
 		DefaultBiomeFeatures.addDoubleFlowers(this);
 		DefaultBiomeFeatures.func_222303_T(this); //mushrooms + taiga grass + dead bush
 		
-		DefaultBiomeFeatures.addFreezeTopLayer(this); //TODO IceAndSnowFeature.class
+		DefaultBiomeFeatures.addFreezeTopLayer(this);
 		
 		//sunflowers
 		this.addFeature(
@@ -277,8 +277,5 @@ public class TempTrashBiome extends Biome {
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SLIME, 100, 4, 4));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.ENDERMAN, 10, 1, 4));
 		this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.WITCH, 5, 1, 1));
-		
-		//this.setRegistryName(XanaduWGRegistries.location("temp trash biome")); //TODO
-		//this.setRegistryName(XanaduWorldGen.MODID, "temp trash biome");
 	}
 }
