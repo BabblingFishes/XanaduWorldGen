@@ -7,30 +7,34 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.provider.BiomeProviderType;
 import net.minecraft.world.biome.provider.OverworldBiomeProvider;
 import net.minecraft.world.biome.provider.OverworldBiomeProviderSettings;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.ChunkGeneratorType;
 import net.minecraft.world.gen.OverworldGenSettings;
+import net.minecraftforge.common.extensions.IForgeWorldType;
 
-public class XanaduWorldType extends WorldType {
-	public XanaduWorldType() {
-		super("xanadu");
+public class XanaduWorldType extends WorldType implements IForgeWorldType {
+	public XanaduWorldType(String name) {
+		super(name);
 	}
 	
 	@Override
 	public ChunkGenerator<?> createChunkGenerator(World world) {
-		
-		ChunkGeneratorType<OverworldGenSettings, XanaduChunkGenerator> chunkGen = XanaduRegistry.xanaduChunkGenerator;
-		//ChunkGeneratorType<OverworldGenSettings, OverworldChunkGenerator> chunkGen = ChunkGeneratorType.SURFACE; //DEBUG
-		OverworldGenSettings genSettings = chunkGen.createSettings();
-
-		//BiomeProviderType<OverworldBiomeProviderSettings, XanaduWGBiomeProvider> biomeProviderType = XanaduWGRegistry.xanaduBiomeProvider;
-		BiomeProviderType<OverworldBiomeProviderSettings, OverworldBiomeProvider> biomeProviderType = BiomeProviderType.VANILLA_LAYERED; //DEBUG
-		OverworldBiomeProviderSettings biomeSettings = biomeProviderType.createSettings().setWorldInfo(world.getWorldInfo()).setGeneratorSettings(genSettings);
-		
-		//BiomeProviderType<SingleBiomeProviderSettings, SingleBiomeProvider> biomeProviderType = BiomeProviderType.FIXED;
-		//SingleBiomeProviderSettings biomeSettings = new SingleBiomeProviderSettings().setBiome(XanaduWGRegistry.flatBiome);
-		
-		return chunkGen.create(world, biomeProviderType.create(biomeSettings), genSettings);
+		if(world.getDimension().getType() == DimensionType.OVERWORLD) {
+			ChunkGeneratorType<OverworldGenSettings, XanaduChunkGenerator> chunkGen = XanaduRegistry.xanaduChunkGenerator;
+			//ChunkGeneratorType<OverworldGenSettings, OverworldChunkGenerator> chunkGen = ChunkGeneratorType.SURFACE; //DEBUG
+			OverworldGenSettings genSettings = chunkGen.createSettings();
+	
+			//BiomeProviderType<OverworldBiomeProviderSettings, XanaduWGBiomeProvider> biomeProviderType = XanaduWGRegistry.xanaduBiomeProvider;
+			BiomeProviderType<OverworldBiomeProviderSettings, OverworldBiomeProvider> biomeProviderType = BiomeProviderType.VANILLA_LAYERED; //DEBUG
+			OverworldBiomeProviderSettings biomeSettings = biomeProviderType.createSettings().setWorldInfo(world.getWorldInfo()).setGeneratorSettings(genSettings);
+			
+			//BiomeProviderType<SingleBiomeProviderSettings, SingleBiomeProvider> biomeProviderType = BiomeProviderType.FIXED;
+			//SingleBiomeProviderSettings biomeSettings = new SingleBiomeProviderSettings().setBiome(XanaduWGRegistry.flatBiome);
+			
+			return chunkGen.create(world, biomeProviderType.create(biomeSettings), genSettings);
+		}
+		else return super.createChunkGenerator(world);
 	}
 	
 	@Override
