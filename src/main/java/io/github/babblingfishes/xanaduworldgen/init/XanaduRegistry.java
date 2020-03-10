@@ -3,11 +3,14 @@ package io.github.babblingfishes.xanaduworldgen.init;
 import io.github.babblingfishes.xanaduworldgen.Xanadu;
 import io.github.babblingfishes.xanaduworldgen.world.biome.provider.XanaduBiomeProvider;
 import io.github.babblingfishes.xanaduworldgen.world.gen.XanaduChunkGenerator;
+import io.github.babblingfishes.xanaduworldgen.world.gen.placement.Height4toVariable;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.provider.BiomeProviderType;
 import net.minecraft.world.biome.provider.OverworldBiomeProviderSettings;
 import net.minecraft.world.gen.ChunkGeneratorType;
 import net.minecraft.world.gen.OverworldGenSettings;
+import net.minecraft.world.gen.placement.NoPlacementConfig;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -20,6 +23,7 @@ public class XanaduRegistry {
 	public static WorldType xanaduWorldType;
 	public static ChunkGeneratorType<OverworldGenSettings, XanaduChunkGenerator> xanaduChunkGenerator;
 	public static BiomeProviderType<OverworldBiomeProviderSettings, XanaduBiomeProvider> xanaduBiomeProvider;
+	public static Placement<NoPlacementConfig> xanaduEmeraldPlacer;
 	
 	/*@SubscribeEvent
 	public static void registerBiomes(RegistryEvent.Register<Biome> event) {
@@ -64,5 +68,16 @@ public class XanaduRegistry {
 		
 		IForgeRegistry<BiomeProviderType<?, ?>> registry = event.getRegistry();
 		registry.register(xanaduBiomeProvider);
+	}
+	
+	@SubscribeEvent
+	public static void registerPlacements(RegistryEvent.Register<Placement<?>> event) {
+		
+		xanaduEmeraldPlacer = new Height4toVariable(NoPlacementConfig::deserialize);
+		
+		xanaduEmeraldPlacer.setRegistryName(Xanadu.MOD_ID, "xanaduemeraldplacer");
+		
+		IForgeRegistry<Placement<?>> registry = event.getRegistry();
+		registry.register(xanaduEmeraldPlacer);
 	}
 }

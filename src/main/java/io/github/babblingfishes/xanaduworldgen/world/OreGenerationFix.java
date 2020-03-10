@@ -1,33 +1,66 @@
 package io.github.babblingfishes.xanaduworldgen.world;
 
 import io.github.babblingfishes.xanaduworldgen.Xanadu;
+import io.github.babblingfishes.xanaduworldgen.init.XanaduRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.feature.ReplaceBlockConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
 import net.minecraft.world.gen.placement.DepthAverageConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.registries.ForgeRegistries;
 
+//For reference: default feature configurations can be found at DefaultBiomeFeatures
 public class OreGenerationFix {
 	public static void setupOreGeneration() {
 		
+		Xanadu.LOGGER.debug("Adding ores to biomes...");
+		
 		for(Biome biome : ForgeRegistries.BIOMES) {
-			if(biome == Biomes.NETHER ||
-			   biome == Biomes.END_BARRENS ||
-			   biome == Biomes.END_HIGHLANDS ||
-			   biome == Biomes.END_MIDLANDS ||
-			   biome == Biomes.SMALL_END_ISLANDS ||
-			   biome == Biomes.THE_END) {
-				Xanadu.LOGGER.debug("Ignoring biome: " + Biomes.NETHER.toString());
+			
+			Biome.Category category = biome.getCategory();
+			
+			//no changes to the end/nether
+			if(category == Biome.Category.NETHER ||
+			   category == Biome.Category.THEEND) {
+				Xanadu.LOGGER.debug("Not adding ores to biome: " + biome.toString());
 			}
 			else {
-				//FILLER
+				//mountain emerald
+				if(category == Biome.Category.EXTREME_HILLS) {
+					Xanadu.LOGGER.debug("Adding emeralds to biome: " + biome.toString());
+					biome.addFeature(
+						GenerationStage.Decoration.UNDERGROUND_ORES,
+						Biome.createDecoratedFeature(
+							Feature.EMERALD_ORE,
+							new ReplaceBlockConfig(
+								Blocks.STONE.getDefaultState(),
+								Blocks.EMERALD_ORE.getDefaultState()),
+							XanaduRegistry.xanaduEmeraldPlacer,
+							IPlacementConfig.NO_PLACEMENT_CONFIG));
+				}
 				
+				//badland gold
+				if(category == Biome.Category.MESA) {
+					Xanadu.LOGGER.debug("Adding extra gold to biome: " + biome.toString());
+					biome.addFeature(
+						GenerationStage.Decoration.UNDERGROUND_ORES,
+						Biome.createDecoratedFeature(
+							Feature.ORE,
+							new OreFeatureConfig(
+								OreFeatureConfig.FillerBlockType.NATURAL_STONE,
+								Blocks.GOLD_ORE.getDefaultState(),
+								9),
+							Placement.COUNT_RANGE,
+							new CountRangeConfig(20, 80, 80, 220)));
+				}
+				
+				//everything:
+				//FILLER
 				biome.addFeature(
 					GenerationStage.Decoration.UNDERGROUND_ORES,
 					Biome.createDecoratedFeature(
@@ -120,8 +153,6 @@ public class OreGenerationFix {
 							7),
 						Placement.COUNT_DEPTH_AVERAGE,
 						new DepthAverageConfig(1, 32, 16)));
-	
-				DefaultBiomeFeatures.addExtraEmeraldOre(biome);
 			}
 		}
 	}

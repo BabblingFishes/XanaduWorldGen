@@ -4,9 +4,12 @@ import io.github.babblingfishes.xanaduworldgen.init.XanaduRegistry;
 import io.github.babblingfishes.xanaduworldgen.world.gen.XanaduChunkGenerator;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.provider.BiomeProviderType;
 import net.minecraft.world.biome.provider.OverworldBiomeProvider;
 import net.minecraft.world.biome.provider.OverworldBiomeProviderSettings;
+import net.minecraft.world.biome.provider.SingleBiomeProvider;
+import net.minecraft.world.biome.provider.SingleBiomeProviderSettings;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.ChunkGeneratorType;
@@ -26,11 +29,12 @@ public class XanaduWorldType extends WorldType implements IForgeWorldType {
 			OverworldGenSettings genSettings = chunkGen.createSettings();
 	
 			//BiomeProviderType<OverworldBiomeProviderSettings, XanaduWGBiomeProvider> biomeProviderType = XanaduWGRegistry.xanaduBiomeProvider;
-			BiomeProviderType<OverworldBiomeProviderSettings, OverworldBiomeProvider> biomeProviderType = BiomeProviderType.VANILLA_LAYERED; //DEBUG
+			
+			BiomeProviderType<OverworldBiomeProviderSettings, OverworldBiomeProvider> biomeProviderType = BiomeProviderType.VANILLA_LAYERED;
 			OverworldBiomeProviderSettings biomeSettings = biomeProviderType.createSettings().setWorldInfo(world.getWorldInfo()).setGeneratorSettings(genSettings);
 			
 			//BiomeProviderType<SingleBiomeProviderSettings, SingleBiomeProvider> biomeProviderType = BiomeProviderType.FIXED;
-			//SingleBiomeProviderSettings biomeSettings = new SingleBiomeProviderSettings().setBiome(XanaduWGRegistry.flatBiome);
+			//SingleBiomeProviderSettings biomeSettings = new SingleBiomeProviderSettings().setBiome(Biomes.DESERT);
 			
 			return chunkGen.create(world, biomeProviderType.create(biomeSettings), genSettings);
 		}

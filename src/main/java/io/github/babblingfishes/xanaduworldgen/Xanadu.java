@@ -31,7 +31,7 @@ public class Xanadu {
 	
 	//preinitialization
 	private void setup(final FMLCommonSetupEvent event) {
-		//OreGenerationFix.setupOreGeneration();
+		OreGenerationFix.setupOreGeneration(); //TODO only trigger this on xanadu world type
 	}
 	
 	//client-only setup = FMLClientSetupEvent
